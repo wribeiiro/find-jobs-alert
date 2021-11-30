@@ -2,7 +2,13 @@
 
 namespace App\Interfaces;
 
+use App\Entities\Job;
+
 interface ReaderInterface
 {
-    public function readJobs();
+    /**
+     *
+     * @return Job[]
+     */
+    public function readJobs(): array;
 }

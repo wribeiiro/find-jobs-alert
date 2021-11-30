@@ -15,7 +15,7 @@ class ReaderJobPagarme extends AbstractReader
      *
      * @return Job[]
      */
-    public function readJobs()
+    public function readJobs(): array
     {
         $browser = new HttpBrowser(HttpClient::create());
         $crawler = $browser->request('GET', PagarmeJobs::ENDPOINT);
@@ -25,7 +25,7 @@ class ReaderJobPagarme extends AbstractReader
         
             $job->setJobName($html->children('div')->children('a')->text())            
                 ->setLocal($html->children('div')->children('span.location')->text())
-                ->setPeriod('Fulltime')
+                ->setPeriod('Full-time')
                 ->setArea('Tecnologia')
                 ->setLink(PagarmeJobs::ENDPOINT . $html->children('div')->children('a')->attr('href'));
             

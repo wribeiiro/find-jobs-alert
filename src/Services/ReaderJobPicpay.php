@@ -15,7 +15,7 @@ class ReaderJobPicpay extends AbstractReader
      *
      * @return Job[]
      */
-    public function readJobs()
+    public function readJobs(): array
     {
         $browser = new HttpBrowser(HttpClient::create());
         $crawler = $browser->request('GET', PicpayJobs::ENDPOINT);
