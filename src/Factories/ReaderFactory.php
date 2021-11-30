@@ -4,9 +4,9 @@ namespace App\Factories;
 
 use App\Enums\CompanyJobs;
 use App\Interfaces\ReaderInterface;
-use App\Services\{ReaderJobSoftExpert, ReaderJobPicpay, ReaderJobPagarme};
+use App\Services\{ReaderJobSoftExpert, ReaderJobPicpay, ReaderJobPagarme, ReaderJobGlobo};
 
-class ReaderFactory 
+class ReaderFactory
 {
     public static function getClass(string $readerName): ReaderInterface
     {
@@ -17,9 +17,10 @@ class ReaderFactory
                 return new ReaderJobPicpay();
             case CompanyJobs::PAGARME:
                 return new ReaderJobPagarme();
+            case CompanyJobs::GLOBO:
+                return new ReaderJobGlobo();
             default:
                 throw new \InvalidArgumentException('Class was not defined or not exists!');
         }
-    } 
-    
+    }
 }
