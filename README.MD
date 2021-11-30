@@ -1,4 +1,4 @@
-# FIND-JOBS-ALERT 💼 📧
+# FIND-JOBS-ALERT 💼🔎📧
 
 This project is based on the aggregation of jobs from some technology companies.
 Check below, some companies avaliable in project
