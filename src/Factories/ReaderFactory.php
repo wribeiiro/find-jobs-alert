@@ -8,6 +8,13 @@ use App\Services\{ReaderJobSoftExpert, ReaderJobPicpay, ReaderJobPagarme, Reader
 
 class ReaderFactory
 {
+    /**
+     * Return an object of ReaderJob
+     *
+     * @param string $readerName
+     * @return ReaderInterface
+     * @throws InvalidArgumentException
+     */
     public static function getClass(string $readerName): ReaderInterface
     {
         switch ($readerName) {
