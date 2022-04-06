@@ -4,16 +4,9 @@ require_once './vendor/autoload.php';
 
 use App\Factories\ReaderFactory;
 
-$softJobs = ReaderFactory::getClass('softexpert');
-$picJobs = ReaderFactory::getClass('picpay');
-$pagarme = ReaderFactory::getClass('pagarme');
-$globo = ReaderFactory::getClass('globo');
-
-$jobs = [
-    $softJobs->readJobs(),
-    $picJobs->readJobs(),
-    $pagarme->readJobs(),
-    $globo->readJobs()
-];
-
-print_r($jobs);
+print_r([
+    ReaderFactory::getClass('softexpert')->readJobs(),
+    ReaderFactory::getClass('pagarme')->readJobs(),
+    ReaderFactory::getClass('globo')->readJobs(),
+    ReaderFactory::getClass('picpay')->readJobs(),
+]);
