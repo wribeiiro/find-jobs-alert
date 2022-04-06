@@ -2,8 +2,8 @@
 
 namespace App\Enums;
 
-class PagarmeJobs
+enum PagarmeJobs: string
 {
-    const ENDPOINT = 'https://boards.greenhouse.io/pagarme';
-    const ELEMENT_SEARCH = '.level-1';
+    case Endpoint = 'https://boards.greenhouse.io/pagarme';
+    case Element = '.level-1';
 }

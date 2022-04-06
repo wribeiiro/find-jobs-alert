@@ -2,8 +2,8 @@
 
 namespace App\Enums;
 
-class PicpayJobs
+enum PicpayJobs: string
 {
-    const ENDPOINT = 'https://picpay.gupy.io';
-    const ELEMENT_SEARCH = 'table tr[data-department="Tecnologia"]';
+    case Endpoint = 'https://picpay.gupy.io';
+    case Element = 'table tr[data-department="Tecnologia"]';
 }

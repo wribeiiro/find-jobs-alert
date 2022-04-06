@@ -2,10 +2,10 @@
 
 namespace App\Enums;
 
-class CompanyJobs
+enum CompanyJobs: string
 {
-    const SOFTEXPERT = 'softexpert';
-    const PICPAY = 'picpay';
-    const PAGARME = 'pagarme';
-    const GLOBO = 'globo';
+    case Softexpert = 'softexpert';
+    case Picpay = 'picpay';
+    case Pagarme = 'pagarme';
+    case Globo = 'globo';
 }

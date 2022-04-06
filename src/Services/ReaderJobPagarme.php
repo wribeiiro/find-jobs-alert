@@ -5,11 +5,13 @@ namespace App\Services;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\HttpClient\HttpClient;
 
-use App\Entities\Job;
+use App\ValueObjects\Job;
 use App\Enums\PagarmeJobs;
 
 class ReaderJobPagarme extends AbstractReader
-{   
+{
+    const PERIOD = 'Full-time';
+    const AREA = 'Tecnologia';
     /**
      * Get the array of jobs
      *
@@ -18,18 +20,16 @@ class ReaderJobPagarme extends AbstractReader
     public function readJobs(): array
     {
         $browser = new HttpBrowser(HttpClient::create());
-        $crawler = $browser->request('GET', PagarmeJobs::ENDPOINT);
-        
-        return $crawler->filter(PagarmeJobs::ELEMENT_SEARCH)->each(function($html) {
-            $job = new Job();
-        
-            $job->setJobName($html->children('div')->children('a')->text())            
-                ->setLocal($html->children('div')->children('span.location')->text())
-                ->setPeriod('Full-time')
-                ->setArea('Tecnologia')
-                ->setLink(PagarmeJobs::ENDPOINT . $html->children('div')->children('a')->attr('href'));
-            
-            return $job;
+        $crawler = $browser->request('GET', PagarmeJobs::Endpoint->value);
+
+        return $crawler->filter(PagarmeJobs::Element->value)->each(function($html) {
+            return new Job(
+                $html->children('div')->children('a')->text(),
+                $html->children('div')->children('span.location')->text(),
+                self::PERIOD,
+                self::AREA,
+                PagarmeJobs::Endpoint->value . $html->children('div')->children('a')->attr('href')
+            );
         });
     }
 }

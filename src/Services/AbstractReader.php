@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Entities\Job;
-use App\Interfaces\ReaderInterface;
+use App\ValueObjects\Job;
+use App\Contracts\ReaderContract;
 
-abstract class AbstractReader implements ReaderInterface
-{   
+abstract class AbstractReader implements ReaderContract
+{
     /**
      *
      * @return Job[]

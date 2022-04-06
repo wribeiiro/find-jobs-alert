@@ -2,8 +2,8 @@
 
 namespace App\Enums;
 
-class SoftExpertJobs
+enum SoftExpertJobs: string
 {
-    const ENDPOINT = 'https://softexpert.hire.trakstar.com';
-    const ELEMENT_SEARCH = '.list-item';
+    case Endpoint = 'https://softexpert.hire.trakstar.com';
+    case Element = '.list-item';
 }

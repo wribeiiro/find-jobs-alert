@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Interfaces;
+namespace App\Contracts;
 
-use App\Entities\Job;
+use App\ValueObjects\Job;
 
-interface ReaderInterface
+interface ReaderContract
 {
     /**
      *

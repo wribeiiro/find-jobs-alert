@@ -2,8 +2,9 @@
 
 namespace App\Factories;
 
+use App\Exceptions\ReaderJobNotFoundException;
 use App\Enums\CompanyJobs;
-use App\Interfaces\ReaderInterface;
+use App\Contracts\ReaderContract;
 use App\Services\{ReaderJobSoftExpert, ReaderJobPicpay, ReaderJobPagarme, ReaderJobGlobo};
 
 class ReaderFactory
@@ -12,22 +13,17 @@ class ReaderFactory
      * Return an object of ReaderJob
      *
      * @param string $readerName
-     * @return ReaderInterface
+     * @return ReaderContract
      * @throws InvalidArgumentException
      */
-    public static function getClass(string $readerName): ReaderInterface
+    public static function getClass(string $readerName): ReaderContract
     {
-        switch ($readerName) {
-            case CompanyJobs::SOFTEXPERT:
-                return new ReaderJobSoftExpert();
-            case CompanyJobs::PICPAY:
-                return new ReaderJobPicpay();
-            case CompanyJobs::PAGARME:
-                return new ReaderJobPagarme();
-            case CompanyJobs::GLOBO:
-                return new ReaderJobGlobo();
-            default:
-                throw new \InvalidArgumentException('Class was not defined or not exists!');
-        }
+        return match ($readerName) {
+            CompanyJobs::Softexpert->value => new ReaderJobSoftExpert(),
+            CompanyJobs::Picpay->value => new ReaderJobPicpay(),
+            CompanyJobs::Pagarme->value => new ReaderJobPagarme(),
+            CompanyJobs::Globo->value => new ReaderJobGlobo(),
+            default => throw new ReaderJobNotFoundException('Class was not defined or not exists!')
+        };
     }
 }

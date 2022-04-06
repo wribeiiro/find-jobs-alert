@@ -5,11 +5,13 @@ namespace App\Services;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\HttpClient\HttpClient;
 
-use App\Entities\Job;
+use App\ValueObjects\Job;
 use App\Enums\PicpayJobs;
 
 class ReaderJobPicpay extends AbstractReader
-{   
+{
+    const PERIOD = 'Full-time';
+    const AREA = 'Tecnologia';
     /**
      * Get the array of jobs
      *
@@ -18,18 +20,16 @@ class ReaderJobPicpay extends AbstractReader
     public function readJobs(): array
     {
         $browser = new HttpBrowser(HttpClient::create());
-        $crawler = $browser->request('GET', PicpayJobs::ENDPOINT);
-        
-        return $crawler->filter(PicpayJobs::ELEMENT_SEARCH)->each(function($html) {
-            $job = new Job();
-            
-            $job->setJobName($html->children('td')->children('a.job-list__item > h4 > span.title')->text())            
-                ->setLocal($html->filter('td')->eq(1)->text())
-                ->setPeriod($html->filter('td')->eq(2)->text())
-                ->setArea('Tecnologia')
-                ->setLink(PicpayJobs::ENDPOINT . $html->children('td')->children('a.job-list__item')->attr('href'));
+        $crawler = $browser->request('GET', PicpayJobs::Endpoint->value);
 
-            return $job;
+        return $crawler->filter(PicpayJobs::Element->value)->each(function($html) {
+            return new Job(
+                $html->children('td')->children('a.job-list__item > h4 > span.title')->text(),
+                $html->filter('td')->eq(1)->text(),
+                $html->filter('td')->eq(2)->text(),
+                'Tecnologia',
+                PicpayJobs::Endpoint->value . $html->children('td')->children('a.job-list__item')->attr('href')
+            );
         });
     }
 }

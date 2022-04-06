@@ -2,8 +2,8 @@
 
 namespace App\Enums;
 
-class GloboJobs
+enum GloboJobs: string
 {
-    const ENDPOINT = 'https://vempraglobo.hire.trakstar.com';
-    const ELEMENT_SEARCH = '.list-item';
+    case Endpoint = 'https://vempraglobo.hire.trakstar.com';
+    case Element = '.list-item';
 }
