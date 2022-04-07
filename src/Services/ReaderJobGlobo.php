@@ -4,12 +4,17 @@ namespace App\Services;
 
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\HttpClient\HttpClient;
-
 use App\ValueObjects\Job;
-use App\Enums\GloboJobs;
+use App\Entities\GloboJobType;
 
 class ReaderJobGlobo extends AbstractReader
 {
+    public function __construct(
+        private $globoJob = new GloboJobType()
+    ) {
+
+    }
+
     /**
      * Get the array of jobs
      *
@@ -18,9 +23,9 @@ class ReaderJobGlobo extends AbstractReader
     public function readJobs(): array
     {
         $browser = new HttpBrowser(HttpClient::create());
-        $crawler = $browser->request('GET', GloboJobs::Endpoint->value);
+        $crawler = $browser->request('GET', $this->globoJob->getEndpoint());
 
-        return $crawler->filter(GloboJobs::Element->value)->each(function($html) {
+        return $crawler->filter($this->globoJob->getElementToFind())->each(function($html) {
             return new Job(
                 $html->children('a')->children('div.row > div.col-md-6 > h3.cut-text')->text(),
                 $html->children('a')->children('div.row > div.col-md-6 > div > span:first-child')->text() . ', ' .
@@ -28,7 +33,7 @@ class ReaderJobGlobo extends AbstractReader
                 $html->children('a')->children('div.row > div.col-md-4 > div > span:first-child')->text() . ' | ' .
                 $html->children('a')->children('div.row > div.col-md-4 > div > span:last-child')->text(),
                 $html->children('a')->children('div.row > div.col-md-4 > div:first-child')->text(),
-                GloboJobs::Endpoint->value . $html->children('a')->attr('href')
+                $this->globoJob->getEndpoint() . $html->children('a')->attr('href')
             );
         });
     }

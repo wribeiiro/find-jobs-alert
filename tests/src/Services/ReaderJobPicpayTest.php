@@ -14,7 +14,7 @@ class ReaderJobPicpayTest extends TestCase
 
     public function testShouldReturnAnArrayOfJobs()
     {
-        $mockFactory = ReaderFactory::getClass(CompanyJobs::Picpay->value);
+        $mockFactory = ReaderFactory::build(CompanyJobs::Picpay->value);
         $jobs = $mockFactory->readJobs();
 
         $this->assertIsArray($jobs);
@@ -22,7 +22,7 @@ class ReaderJobPicpayTest extends TestCase
 
     public function testShouldReturnAnObjectReaderContract()
     {
-        $reader = ReaderFactory::getClass(CompanyJobs::Picpay->value);
+        $reader = ReaderFactory::build(CompanyJobs::Picpay->value);
         $this->assertInstanceOf(ReaderContract::class, $reader);
     }
 }

@@ -14,7 +14,7 @@ class ReaderJobSoftexpertTest extends TestCase
 
     public function testShouldReturnAnArrayOfJobs()
     {
-        $mockFactory = ReaderFactory::getClass(CompanyJobs::Softexpert->value);
+        $mockFactory = ReaderFactory::build(CompanyJobs::Softexpert->value);
         $jobs = $mockFactory->readJobs();
 
         $this->assertIsArray($jobs);
@@ -22,7 +22,7 @@ class ReaderJobSoftexpertTest extends TestCase
 
     public function testShouldReturnAnObjectReaderContract()
     {
-        $reader = ReaderFactory::getClass(CompanyJobs::Softexpert->value);
+        $reader = ReaderFactory::build(CompanyJobs::Softexpert->value);
         $this->assertInstanceOf(ReaderContract::class, $reader);
     }
 }

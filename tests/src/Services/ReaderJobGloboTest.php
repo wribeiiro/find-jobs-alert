@@ -14,7 +14,7 @@ class ReaderJobGloboTest extends TestCase
 
     public function testShouldReturnAnArrayOfJobs()
     {
-        $mockFactory = ReaderFactory::getClass(CompanyJobs::Globo->value);
+        $mockFactory = ReaderFactory::build(CompanyJobs::Globo->value);
         $jobs = $mockFactory->readJobs();
 
         $this->assertIsArray($jobs);
@@ -22,7 +22,7 @@ class ReaderJobGloboTest extends TestCase
 
     public function testShouldReturnAnObjectReaderContract()
     {
-        $reader = ReaderFactory::getClass(CompanyJobs::Globo->value);
+        $reader = ReaderFactory::build(CompanyJobs::Globo->value);
         $this->assertInstanceOf(ReaderContract::class, $reader);
     }
 }

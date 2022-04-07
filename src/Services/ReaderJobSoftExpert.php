@@ -4,12 +4,17 @@ namespace App\Services;
 
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\HttpClient\HttpClient;
-
 use App\ValueObjects\Job;
-use App\Enums\SoftExpertJobs;
+use App\Entities\SoftexpertJobType;
 
 class ReaderJobSoftExpert extends AbstractReader
 {
+    public function __construct(
+        private $softexpertJob = new SoftexpertJobType()
+    ) {
+
+    }
+
     /**
      * Get the array of jobs
      *
@@ -18,9 +23,9 @@ class ReaderJobSoftExpert extends AbstractReader
     public function readJobs(): array
     {
         $browser = new HttpBrowser(HttpClient::create());
-        $crawler = $browser->request('GET', SoftExpertJobs::Endpoint->value);
+        $crawler = $browser->request('GET', $this->softexpertJob->getEndpoint());
 
-        return $crawler->filter(SoftExpertJobs::Element->value)->each(function($html) {
+        return $crawler->filter($this->softexpertJob->getElementToFind())->each(function($html) {
             return new Job(
                 $html->children('a')->children('div.row > div.col-md-6 > h3.cut-text')->text(),
                 $html->children('a')->children('div.row > div.col-md-6 > div > span:first-child')->text() . ', ' .
@@ -28,7 +33,7 @@ class ReaderJobSoftExpert extends AbstractReader
                 $html->children('a')->children('div.row > div.col-md-4 > div > span:first-child')->text() . ' | ' .
                 $html->children('a')->children('div.row > div.col-md-4 > div > span:last-child')->text(),
                 $html->children('a')->children('div.row > div.col-md-4 > div:first-child')->text(),
-                SoftExpertJobs::Endpoint->value . $html->children('a')->attr('href')
+                $this->softexpertJob->getEndpoint() . $html->children('a')->attr('href')
             );
         });
     }

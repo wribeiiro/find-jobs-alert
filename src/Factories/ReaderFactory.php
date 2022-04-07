@@ -16,7 +16,7 @@ class ReaderFactory
      * @return ReaderContract
      * @throws InvalidArgumentException
      */
-    public static function getClass(string $readerName): ReaderContract
+    public static function build(string $readerName): ReaderContract
     {
         return match ($readerName) {
             CompanyJobs::Softexpert->value => new ReaderJobSoftExpert(),

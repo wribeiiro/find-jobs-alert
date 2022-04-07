@@ -15,7 +15,7 @@ class ReaderFactoryTest extends TestCase
 
     public function testShouldReturnAnArrayOfJobs()
     {
-        $mockFactory = ReaderFactory::getClass(CompanyJobs::Softexpert->value);
+        $mockFactory = ReaderFactory::build(CompanyJobs::Softexpert->value);
         $jobs = $mockFactory->readJobs();
 
         $this->assertIsArray($jobs);
@@ -27,12 +27,12 @@ class ReaderFactoryTest extends TestCase
         $this->expectException(ReaderJobNotFoundException::class);
         $this->expectExceptionMessage('Class was not defined or not exists!');
 
-        ReaderFactory::getClass('vai dar ruim quer ver?');
+        ReaderFactory::build('vai dar ruim quer ver?');
     }
 
     public function testShouldReturnAnObjectReaderContract()
     {
-        $reader = ReaderFactory::getClass(CompanyJobs::Softexpert->value);
+        $reader = ReaderFactory::build(CompanyJobs::Softexpert->value);
         $this->assertInstanceOf(ReaderContract::class, $reader);
     }
 }
